@@ -2,7 +2,7 @@
 
 ```bash
 # 克隆项目
-git clone http://gitlab.o-ibp.com:9090/mason.zhou/clickless
+git clone https://github.com/mason-zhou/clickless.git
 
 # 进入项目目录
 cd clickless-ui

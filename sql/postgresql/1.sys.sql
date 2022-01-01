@@ -366,7 +366,7 @@ VALUES ('3', '系统工具', '0', '3', 'tool', NULL, '', 1, 0, 'M', '0', '0', ''
 INSERT INTO sys_menu
 VALUES ('4', '示例模块', '0', '4', 'sample', NULL, '', 1, 0, 'M', '0', '0', '', 'tool', 'admin', NOW(), '', NULL, '示例模块目录');
 INSERT INTO sys_menu
-VALUES ('5', 'clickless官网', '0', '5', 'http://gitlab.o-ibp.com:9090/mason.zhou/clickless', NULL, '', 0, 0, 'M', '0', '0', '', 'guide', 'admin', NOW(), '',
+VALUES ('5', 'clickless官网', '0', '5', 'https://github.com/mason-zhou/clickless', NULL, '', 0, 0, 'M', '0', '0', '', 'guide', 'admin', NOW(), '',
         NULL, 'clickless官网地址');
 -- 二级菜单
 INSERT INTO sys_menu

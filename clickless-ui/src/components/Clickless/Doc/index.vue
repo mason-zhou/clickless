@@ -9,7 +9,7 @@ export default {
   name: 'ClicklessDoc',
   data() {
     return {
-      url: 'http://gitlab.o-ibp.com:9090/mason.zhou/clickless'
+      url: 'https://github.com/mason-zhou/clickless'
     }
   },
   methods: {

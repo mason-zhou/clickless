@@ -18,14 +18,14 @@
             size="mini"
             icon="el-icon-cloudy"
             plain
-            @click="goTarget('http://gitlab.o-ibp.com:9090/mason.zhou/clickless')"
+            @click="goTarget('https://github.com/mason-zhou/clickless')"
             >访问代码</el-button
           >
           <el-button
             size="mini"
             icon="el-icon-s-home"
             plain
-            @click="goTarget('http://gitlab.o-ibp.com:9090/mason.zhou/clickless')"
+            @click="goTarget('https://github.com/mason-zhou/clickless')"
             >访问主页</el-button
           >
         </p>

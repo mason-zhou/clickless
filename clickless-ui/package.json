@@ -33,7 +33,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "http://gitlab.o-ibp.com:9090/mason.zhou/clickless.git"
+    "url": "https://github.com/mason-zhou/clickless.git"
   },
   "dependencies": {
     "@riophae/vue-treeselect": "0.4.0",

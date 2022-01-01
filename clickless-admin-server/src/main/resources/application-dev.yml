@@ -1,0 +1,79 @@
+# 数据源配置
+spring:
+  # redis 配置
+  redis:
+    # 地址
+    host: 139.196.190.236
+    # 端口，默认为6379
+    port: 16389
+    # 数据库索引
+    database: 13
+    # 密码
+    password: lucky2021!@#
+    # 连接超时时间
+    timeout: 10s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+
+  datasource:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: admin
+        url-pattern: /druid/*
+    dynamic:
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      p6spy: true #打印编译后SQL,默认false,生产环境建议关闭
+      druid: # 以下是druid数据源全局配置
+        # 初始连接数
+        initialSize: 5
+        # 最小连接池数量
+        minIdle: 10
+        # 最大连接池数量
+        maxActive: 20
+        # 配置获取连接等待超时的时间
+        maxWait: 60000
+        # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        timeBetweenEvictionRunsMillis: 60000
+        # 配置一个连接在池中最小生存的时间，单位是毫秒
+        minEvictableIdleTimeMillis: 300000
+        # 配置一个连接在池中最大生存的时间，单位是毫秒
+        maxEvictableIdleTimeMillis: 900000
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          multi-statement-allow: true
+
+      # 指定主数据源
+      primary: master
+      datasource:
+        # 主库数据源
+        master:
+          driverClassName: org.postgresql.Driver
+          url: jdbc:postgresql://139.196.190.236:5432/clickless_dev?reWriteBatchedInserts=true
+          username: 'clickless_dev'
+          password: 'clickless2022'
+          p6spy: true # 如果这个库不需要可单独关闭。
+          druid: # 以下是针对单个数据源独立配置,每个库可以单独设置
+            validationQuery: SELECT VERSION()
+        # 从库数据源
+        slave:
+          lazy: true
+          driverClassName:
+          url:
+          username:
+          password:

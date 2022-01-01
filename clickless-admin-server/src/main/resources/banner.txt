@@ -1,0 +1,7 @@
+Application Version: ${clickless.version}
+Spring Boot Version: ${spring-boot.version}
+--------------------------------------------------
+
+    Clickless Application preparing to start...
+
+--------------------------------------------------

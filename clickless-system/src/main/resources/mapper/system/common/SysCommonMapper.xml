@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clickless.system.common.mapper.CommonMapper">
+
+    <select id="selectColumnDistinctValue" resultType="java.lang.Object">
+        SELECT DISTINCT ${dbColumnName} FROM ${tableName}
+        <where>
+            ${dbColumnName} IS NOT NULL
+            <if test="searchValue != null and searchValue != ''">
+                AND ${dbColumnName} LIKE concat('%', #{searchValue}, '%')
+            </if>
+        </where>
+    </select>
+
+</mapper>

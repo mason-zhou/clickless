@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clickless.sample.product.mapper.SampleProductMapper">
+    
+    <resultMap type="SampleProduct" id="SampleProductResult">
+        <result property="id"    column="id"    />
+        <result property="productNo"    column="product_no"    />
+        <result property="productName"    column="product_name"    />
+        <result property="weight"    column="weight"    />
+        <result property="launchDate"    column="launch_date"    />
+        <result property="sex"    column="sex"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="isDisabled"    column="is_disabled"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectSampleProductVo">
+        select id, product_no, product_name, weight, launch_date, sex, create_time, is_disabled, is_deleted from sample_product
+    </sql>
+
+    <select id="selectSampleProductList" parameterType="SampleProduct" resultMap="SampleProductResult">
+        <include refid="selectSampleProductVo"/>
+        <where>  
+            <if test="productNo != null  and productNo != ''"> and product_no::VARCHAR like concat('%', #{productNo}, '%')</if>
+            <if test="productName != null  and productName != ''"> and product_name::VARCHAR like concat('%', #{productName}, '%')</if>
+            <if test="weight != null "> and weight::VARCHAR like concat('%', #{weight}, '%')</if>
+            <if test="params.beginLaunchDate != null and params.beginLaunchDate != '' and params.endLaunchDate != null and params.endLaunchDate != ''"> and launch_date between #{params.beginLaunchDate}::date and #{params.endLaunchDate}::date</if>
+            <if test="sex != null "> and sex = #{sex}</if>
+            <if test="isDisabled != null "> and is_disabled = #{isDisabled}</if>
+            <if test="isDeleted != null "> and is_deleted = #{isDeleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectSampleProductById" parameterType="Long" resultMap="SampleProductResult">
+        <include refid="selectSampleProductVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSampleProduct" parameterType="SampleProduct" useGeneratedKeys="true" keyProperty="id">
+        insert into sample_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productNo != null">product_no,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="weight != null">weight,</if>
+            <if test="launchDate != null">launch_date,</if>
+            <if test="sex != null">sex,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="isDisabled != null">is_disabled,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productNo != null">#{productNo},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="launchDate != null">#{launchDate},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="isDisabled != null">#{isDisabled},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSampleProduct" parameterType="SampleProduct">
+        update sample_product
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productNo != null">product_no = #{productNo},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="launchDate != null">launch_date = #{launchDate},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="isDisabled != null">is_disabled = #{isDisabled},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSampleProductById" parameterType="Long">
+        delete from sample_product where id = #{id}
+    </delete>
+
+    <delete id="deleteSampleProductByIds" parameterType="String">
+        delete from sample_product where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectSampleProductDistinctColumnList" parameterType="SampleProduct" resultType="java.lang.Object">
+        SELECT DISTINCT
+        <if test="params.fieldKey != null and params.fieldKey != ''">
+            <if test="params.fieldKey == 'id'"> id</if>
+            <if test="params.fieldKey == 'productNo'"> product_no</if>
+            <if test="params.fieldKey == 'productName'"> product_name</if>
+            <if test="params.fieldKey == 'weight'"> weight</if>
+            <if test="params.fieldKey == 'launchDate'"> launch_date</if>
+            <if test="params.fieldKey == 'sex'"> sex</if>
+            <if test="params.fieldKey == 'createTime'"> create_time</if>
+            <if test="params.fieldKey == 'isDisabled'"> is_disabled</if>
+            <if test="params.fieldKey == 'isDeleted'"> is_deleted</if>
+        </if>
+        FROM sample_product
+        <where>
+            <if test="id != null "> and id::VARCHAR like concat('%', #{id}, '%')</if>
+            <if test="productNo != null "> and product_no::VARCHAR like concat('%', #{productNo}, '%')</if>
+            <if test="productName != null "> and product_name::VARCHAR like concat('%', #{productName}, '%')</if>
+            <if test="weight != null "> and weight::VARCHAR like concat('%', #{weight}, '%')</if>
+            <if test="params.beginLaunchDate != null and params.beginLaunchDate != '' and params.endLaunchDate != null and params.endLaunchDate != ''"> and launch_date between #{params.beginLaunchDate}::date and #{params.endLaunchDate}::date</if>
+            <if test="sex != null "> and sex::VARCHAR like concat('%', #{sex}, '%')</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime}::timestamptz and #{params.endCreateTime}::timestamptz</if>
+            <if test="isDisabled != null "> and is_disabled::VARCHAR like concat('%', #{isDisabled}, '%')</if>
+            <if test="isDeleted != null "> and is_deleted::VARCHAR like concat('%', #{isDeleted}, '%')</if>
+        </where>
+    </select>
+
+</mapper>

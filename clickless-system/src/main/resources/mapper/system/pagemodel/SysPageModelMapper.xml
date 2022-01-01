@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clickless.system.pagemodel.mapper.SysPageModelMapper">
+
+    <resultMap type="SysPageModel" id="SysPageModelResult">
+        <result property="id" column="id"/>
+        <result property="modelKey" column="model_key"/>
+        <result property="modelName" column="model_name"/>
+        <result property="dbTableName" column="db_table_name"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isDeleted" column="is_deleted"/>
+    </resultMap>
+
+    <resultMap id="SysPageModelSysPageModelFieldResult" type="SysPageModel" extends="SysPageModelResult">
+        <collection property="sysPageModelFieldList" notNullColumn="sub_id" javaType="java.util.List"
+                    resultMap="SysPageModelFieldResult"/>
+    </resultMap>
+
+    <resultMap type="SysPageModelField" id="SysPageModelFieldResult">
+        <result property="id" column="sub_id"/>
+        <result property="modelId" column="sub_model_id"/>
+        <result property="fieldKey" column="sub_field_key"/>
+        <result property="fieldName" column="sub_field_name"/>
+        <result property="dbColumnName" column="sub_db_column_name"/>
+        <result property="dictType" column="sub_dict_type"/>
+        <result property="fieldSort" column="sub_field_sort"/>
+        <result property="createBy" column="sub_create_by"/>
+        <result property="createTime" column="sub_create_time"/>
+        <result property="updateBy" column="sub_update_by"/>
+        <result property="updateTime" column="sub_update_time"/>
+        <result property="isDeleted" column="sub_is_deleted"/>
+    </resultMap>
+
+    <sql id="selectSysPageModelVo">
+        SELECT id,
+               model_key,
+               model_name,
+               db_table_name,
+               create_by,
+               create_time,
+               update_by,
+               update_time,
+               is_deleted
+        FROM sys_page_model
+    </sql>
+
+    <select id="selectSysPageModelList" parameterType="SysPageModel" resultMap="SysPageModelResult">
+        <include refid="selectSysPageModelVo"/>
+        <where>
+            <if test="modelKey != null  and modelKey != ''">and model_key like concat('%', #{modelKey}, '%')</if>
+            <if test="modelName != null  and modelName != ''">and model_name like concat('%', #{modelName}, '%')</if>
+            <if test="dbTableName != null  and dbTableName != ''">and db_table_name like concat('%', #{dbTableName},
+                '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSysPageModelById" parameterType="Long" resultMap="SysPageModelSysPageModelFieldResult">
+        SELECT a.id,
+               a.model_key,
+               a.model_name,
+               a.db_table_name,
+               a.create_by,
+               a.create_time,
+               a.update_by,
+               a.update_time,
+               a.is_deleted,
+               b.id             AS sub_id,
+               b.model_id       AS sub_model_id,
+               b.field_key      AS sub_field_key,
+               b.field_name     AS sub_field_name,
+               b.db_column_name AS sub_db_column_name,
+               b.dict_type      AS sub_dict_type,
+               b.field_sort     AS sub_field_sort,
+               b.create_by      AS sub_create_by,
+               b.create_time    AS sub_create_time,
+               b.update_by      AS sub_update_by,
+               b.update_time    AS sub_update_time,
+               b.is_deleted     AS sub_is_deleted
+        FROM sys_page_model a
+                 LEFT JOIN sys_page_model_field b ON b.model_id = a.id
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="selectSysPageModelByKey" parameterType="String" resultMap="SysPageModelSysPageModelFieldResult">
+        SELECT a.id,
+               a.model_key,
+               a.model_name,
+               a.db_table_name,
+               a.create_by,
+               a.create_time,
+               a.update_by,
+               a.update_time,
+               a.is_deleted,
+               b.id             AS sub_id,
+               b.model_id       AS sub_model_id,
+               b.field_key      AS sub_field_key,
+               b.field_name     AS sub_field_name,
+               b.db_column_name AS sub_db_column_name,
+               b.dict_type      AS sub_dict_type,
+               b.field_sort     AS sub_field_sort,
+               b.create_by      AS sub_create_by,
+               b.create_time    AS sub_create_time,
+               b.update_by      AS sub_update_by,
+               b.update_time    AS sub_update_time,
+               b.is_deleted     AS sub_is_deleted
+        FROM sys_page_model a
+                 LEFT JOIN sys_page_model_field b ON b.model_id = a.id
+        WHERE a.model_key = #{modelKey}
+    </select>
+
+    <insert id="insertSysPageModel" parameterType="SysPageModel" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_page_model
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="modelKey != null">model_key,</if>
+            <if test="modelName != null">model_name,</if>
+            <if test="dbTableName != null">db_table_name,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null">is_deleted,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="modelKey != null">#{modelKey},</if>
+            <if test="modelName != null">#{modelName},</if>
+            <if test="dbTableName != null">#{dbTableName},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null">#{isDeleted},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSysPageModel" parameterType="SysPageModel">
+        update sys_page_model
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="modelKey != null">model_key = #{modelKey},</if>
+            <if test="modelName != null">model_name = #{modelName},</if>
+            <if test="dbTableName != null">db_table_name = #{dbTableName},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null">is_deleted = #{isDeleted},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysPageModelById" parameterType="Long">
+        DELETE
+        FROM sys_page_model
+        WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteSysPageModelByIds" parameterType="String">
+        delete from sys_page_model where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectSysPageModelDistinctColumnList" parameterType="SysPageModel" resultType="java.lang.Object">
+        SELECT DISTINCT
+        <if test="params.fieldKey != null and params.fieldKey != ''">
+            <if test="params.fieldKey == 'id'">id</if>
+            <if test="params.fieldKey == 'modelKey'">model_key</if>
+            <if test="params.fieldKey == 'modelName'">model_name</if>
+            <if test="params.fieldKey == 'dbTableName'">db_table_name</if>
+            <if test="params.fieldKey == 'createBy'">create_by</if>
+            <if test="params.fieldKey == 'createTime'">create_time</if>
+            <if test="params.fieldKey == 'updateBy'">update_by</if>
+            <if test="params.fieldKey == 'updateTime'">update_time</if>
+            <if test="params.fieldKey == 'isDeleted'">is_deleted</if>
+        </if>
+        FROM sys_page_model
+        <where>
+            <if test="id != null ">and id::VARCHAR like concat('%', #{id}, '%')</if>
+            <if test="modelKey != null ">and model_key::VARCHAR like concat('%', #{modelKey}, '%')</if>
+            <if test="modelName != null ">and model_name::VARCHAR like concat('%', #{modelName}, '%')</if>
+            <if test="dbTableName != null ">and db_table_name::VARCHAR like concat('%', #{dbTableName}, '%')</if>
+            <if test="createBy != null ">and create_by::VARCHAR like concat('%', #{createBy}, '%')</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''">
+                and create_time between #{params.beginCreateTime}::timestamptz and #{params.endCreateTime}::timestamptz
+            </if>
+            <if test="updateBy != null ">and update_by::VARCHAR like concat('%', #{updateBy}, '%')</if>
+            <if test="params.beginUpdateTime != null and params.beginUpdateTime != '' and params.endUpdateTime != null and params.endUpdateTime != ''">
+                and update_time between #{params.beginUpdateTime}::timestamptz and #{params.endUpdateTime}::timestamptz
+            </if>
+            <if test="isDeleted != null ">and is_deleted::VARCHAR like concat('%', #{isDeleted}, '%')</if>
+        </where>
+    </select>
+
+
+    <delete id="deleteSysPageModelFieldByModelIds" parameterType="String">
+        delete from sys_page_model_field where model_id in
+        <foreach item="modelId" collection="array" open="(" separator="," close=")">
+            #{modelId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteSysPageModelFieldByModelId" parameterType="Long">
+        DELETE
+        FROM sys_page_model_field
+        WHERE model_id = #{modelId}
+    </delete>
+
+    <insert id="batchSysPageModelField">
+        insert into sys_page_model_field( id, model_id, field_key, field_name, db_column_name, dict_type, field_sort,
+        create_by, create_time, update_by, update_time, is_deleted) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.modelId}, #{item.fieldKey}, #{item.fieldName}, #{item.dbColumnName}, #{item.dictType},
+            #{item.fieldSort}, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime},
+            #{item.isDeleted})
+        </foreach>
+    </insert>
+
+    <select id="selectUserFields" resultType="com.clickless.system.pagemodel.domain.SysUserField">
+        SELECT user_id    AS "userId",
+               model_key  AS "modelKey",
+               field_key  AS "fieldKey",
+               field_sort AS "fieldSort"
+        FROM sys_user_field
+        WHERE user_id = #{userId}
+          AND model_key = #{modelKey}
+        ORDER BY field_sort ASC
+    </select>
+
+    <delete id="deleteUserFields">
+        DELETE
+        FROM sys_user_field uf
+        WHERE uf.user_id = #{userId}
+          AND uf.model_key = #{modelKey}
+    </delete>
+
+    <insert id="insertUserFields">
+        INSERT INTO sys_user_field(user_id, model_key, field_key, field_sort, create_by)
+        VALUES
+        <foreach collection="fieldKeys" item="fieldKey" index="index" separator=",">
+            (
+            #{userId},
+            #{modelKey},
+            #{fieldKey},
+            #{index},
+            (SELECT user_name FROM sys_user WHERE user_id = #{userId})
+            )
+        </foreach>
+
+    </insert>
+</mapper>

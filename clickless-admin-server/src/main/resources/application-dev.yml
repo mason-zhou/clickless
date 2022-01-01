@@ -3,13 +3,13 @@ spring:
   # redis 配置
   redis:
     # 地址
-    host: 139.196.190.236
+    host: 127.0.0.1
     # 端口，默认为6379
-    port: 16389
+    port: 6379
     # 数据库索引
-    database: 13
+    database: 0
     # 密码
-    password: lucky2021!@#
+    password:
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -64,9 +64,9 @@ spring:
         # 主库数据源
         master:
           driverClassName: org.postgresql.Driver
-          url: jdbc:postgresql://139.196.190.236:5432/clickless_dev?reWriteBatchedInserts=true
-          username: 'clickless_dev'
-          password: 'clickless2022'
+          url: jdbc:postgresql://127.0.0.1:5432/github_clickless?reWriteBatchedInserts=true
+          username: 'postgres'
+          password: 'postgres'
           p6spy: true # 如果这个库不需要可单独关闭。
           druid: # 以下是针对单个数据源独立配置,每个库可以单独设置
             validationQuery: SELECT VERSION()

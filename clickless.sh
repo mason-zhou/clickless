@@ -1,5 +1,5 @@
 #!/bin/sh
-# ./ry.sh start 启动 stop 停止 restart 重启 status 状态
+# ./clickless.sh start 启动 stop 停止 restart 重启 status 状态
 AppName=clickless-admin-server.jar
 
 # JVM参数

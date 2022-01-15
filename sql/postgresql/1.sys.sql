@@ -1142,7 +1142,7 @@ CREATE TABLE sys_config
     config_name  VARCHAR(100) NULL DEFAULT '0',
     config_key   VARCHAR(100) NULL DEFAULT '',
     config_value VARCHAR(500) NULL DEFAULT '',
-    config_type  CHAR(1)      NULL DEFAULT 'N',
+    config_type  CHAR(1)      NULL DEFAULT '0',
     create_by    VARCHAR(64)  NULL DEFAULT '',
     create_time  timestamptz  NULL DEFAULT CURRENT_TIMESTAMP,
     update_by    VARCHAR(64)  NULL DEFAULT '',
@@ -1162,7 +1162,7 @@ COMMENT
 COMMENT
     ON COLUMN sys_config.config_value IS '参数键值';
 COMMENT
-    ON COLUMN sys_config.config_type IS '系统内置（Y是 N否）';
+    ON COLUMN sys_config.config_type IS '系统内置（1是 0否）';
 COMMENT
     ON COLUMN sys_config.create_by IS '创建者';
 COMMENT
@@ -1178,18 +1178,18 @@ COMMENT
 -- 初始化-参数配置表
 -- ----------------------------
 INSERT INTO sys_config
-VALUES (1, '主框架页-默认皮肤样式名称', 'sys.index.skinName', 'skin-blue', 'Y', 'admin', NOW(), '', NULL,
+VALUES (1, '主框架页-默认皮肤样式名称', 'sys.index.skinName', 'skin-blue', '1', 'admin', NOW(), '', NULL,
         '蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow');
 INSERT INTO sys_config
-VALUES (2, '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'admin', NOW(), '', NULL, '初始化密码 123456');
+VALUES (2, '用户管理-账号初始密码', 'sys.user.initPassword', '123456', '1', 'admin', NOW(), '', NULL, '初始化密码 123456');
 INSERT INTO sys_config
-VALUES (3, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-dark', 'Y', 'admin', NOW(), '', NULL,
+VALUES (3, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-dark', '1', 'admin', NOW(), '', NULL,
         '深色主题theme-dark，浅色主题theme-light');
 INSERT INTO sys_config
-VALUES (4, '账号自助-验证码开关', 'sys.account.captchaOnOff', 'true', 'Y', 'admin', NOW(), '', NULL,
+VALUES (4, '账号自助-验证码开关', 'sys.account.captchaOnOff', 'true', '1', 'admin', NOW(), '', NULL,
         '是否开启验证码功能（true开启，false关闭）');
 INSERT INTO sys_config
-VALUES (5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'false', 'Y', 'admin', NOW(), '', NULL,
+VALUES (5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'false', '1', 'admin', NOW(), '', NULL,
         '是否开启注册用户功能（true开启，false关闭）');
 
 -- ----------------------------

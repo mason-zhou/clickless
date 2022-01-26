@@ -1,0 +1,20 @@
+# 前端服务
+version: "3.7"
+services:
+  clickless-ui:
+    build:
+      context: ../../clickless-ui
+      dockerfile: ./Dockerfile
+    expose:
+      - 28080
+    restart: always
+    image: clickless-ui:latest
+    container_name: clickless-ui
+    ports:
+      - 28080:80
+    volumes:
+      - /var/log/clickless/${PROFILES}/clickless-ui:/var/log/nginx
+    environment:
+      - TZ=Asia/Shanghai
+      - BACKEND_URL=${ADMIN_BACKEND_URL}
+

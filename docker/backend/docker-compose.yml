@@ -1,0 +1,21 @@
+# 后端服务
+version: "3.7"
+services:
+  backend-admin-server:
+    build:
+      context: ../../clickless-admin-server
+      dockerfile: ./Dockerfile
+    expose:
+      - 29091
+    restart: always
+    image: backend-admin-server:latest
+    container_name: backend-admin-server
+    ports:
+      - 29091:8080
+    volumes:
+      - /var/log/clickless/${PROFILES}/backend-admin-server:/logs
+    environment:
+      - TZ=Asia/Shanghai
+      - spring.profiles.active=${PROFILES}
+
+

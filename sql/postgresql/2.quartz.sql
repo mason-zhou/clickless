@@ -40,8 +40,7 @@ CREATE TABLE qrtz_triggers
     misfire_instr  SMALLINT     NULL,
     job_data       bytea        NULL,
     PRIMARY KEY (sched_name, trigger_name, trigger_group),
-    FOREIGN KEY (sched_name, job_name, job_group)
-        REFERENCES qrtz_job_details (sched_name, job_name, job_group)
+    FOREIGN KEY (sched_name, job_name, job_group) REFERENCES qrtz_job_details (sched_name, job_name, job_group)
 );
 -- ----------------------------
 -- 3、 存储简单的 Trigger，包括重复次数，间隔，以及已触发的次数
@@ -56,8 +55,7 @@ CREATE TABLE qrtz_simple_triggers
     repeat_interval BIGINT       NOT NULL,
     times_triggered BIGINT       NOT NULL,
     PRIMARY KEY (sched_name, trigger_name, trigger_group),
-    FOREIGN KEY (sched_name, trigger_name, trigger_group)
-        REFERENCES qrtz_triggers (sched_name, trigger_name, trigger_group)
+    FOREIGN KEY (sched_name, trigger_name, trigger_group) REFERENCES qrtz_triggers (sched_name, trigger_name, trigger_group)
 );
 -- ----------------------------
 -- 4、 存储 Cron Trigger，包括 Cron 表达式和时区信息
@@ -71,8 +69,7 @@ CREATE TABLE qrtz_cron_triggers
     cron_expression VARCHAR(120) NOT NULL,
     time_zone_id    VARCHAR(80),
     PRIMARY KEY (sched_name, trigger_name, trigger_group),
-    FOREIGN KEY (sched_name, trigger_name, trigger_group)
-        REFERENCES qrtz_triggers (sched_name, trigger_name, trigger_group)
+    FOREIGN KEY (sched_name, trigger_name, trigger_group) REFERENCES qrtz_triggers (sched_name, trigger_name, trigger_group)
 );
 
 -- ----------------------------
@@ -86,8 +83,7 @@ CREATE TABLE qrtz_blob_triggers
     trigger_group VARCHAR(200) NOT NULL,
     blob_data     bytea        NULL,
     PRIMARY KEY (sched_name, trigger_name, trigger_group),
-    FOREIGN KEY (sched_name, trigger_name, trigger_group)
-        REFERENCES qrtz_triggers (sched_name, trigger_name, trigger_group)
+    FOREIGN KEY (sched_name, trigger_name, trigger_group) REFERENCES qrtz_triggers (sched_name, trigger_name, trigger_group)
 );
 
 -- ----------------------------
@@ -176,8 +172,7 @@ CREATE TABLE qrtz_simprop_triggers
     bool_prop_1   bool           NULL,
     bool_prop_2   bool           NULL,
     PRIMARY KEY (sched_name, trigger_name, trigger_group),
-    FOREIGN KEY (sched_name, trigger_name, trigger_group)
-        REFERENCES qrtz_triggers (sched_name, trigger_name, trigger_group)
+    FOREIGN KEY (sched_name, trigger_name, trigger_group) REFERENCES qrtz_triggers (sched_name, trigger_name, trigger_group)
 );
 CREATE INDEX idx_qrtz_j_req_recovery ON qrtz_job_details (sched_name, requests_recovery);
 CREATE INDEX idx_qrtz_j_grp ON qrtz_job_details (sched_name, job_group);

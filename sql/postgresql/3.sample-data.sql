@@ -19,26 +19,16 @@ CREATE TABLE sample_product
 
 ALTER SEQUENCE IF EXISTS sample_product_id_seq RESTART WITH 100 CACHE 20;
 
-COMMENT
-    ON TABLE sample_product IS '示例表-商品数据';
-COMMENT
-    ON COLUMN sample_product.id IS '代理主键';
-COMMENT
-    ON COLUMN sample_product.product_no IS '商品编号';
-COMMENT
-    ON COLUMN sample_product.product_name IS '商品名称';
-COMMENT
-    ON COLUMN sample_product.weight IS '商品重量';
-COMMENT
-    ON COLUMN sample_product.launch_date IS '上市日期';
-COMMENT
-    ON COLUMN sample_product.sex IS '适用性别（1男 0女）';
-COMMENT
-    ON COLUMN sample_product.create_time IS '创建时间';
-COMMENT
-    ON COLUMN sample_product.is_disabled IS '是否禁用（0正常 1禁用）';
-COMMENT
-    ON COLUMN sample_product.is_deleted IS '逻辑删除（0正常 1删除）';
+COMMENT ON TABLE sample_product IS '示例表-商品数据';
+COMMENT ON COLUMN sample_product.id IS '代理主键';
+COMMENT ON COLUMN sample_product.product_no IS '商品编号';
+COMMENT ON COLUMN sample_product.product_name IS '商品名称';
+COMMENT ON COLUMN sample_product.weight IS '商品重量';
+COMMENT ON COLUMN sample_product.launch_date IS '上市日期';
+COMMENT ON COLUMN sample_product.sex IS '适用性别（1男 0女）';
+COMMENT ON COLUMN sample_product.create_time IS '创建时间';
+COMMENT ON COLUMN sample_product.is_disabled IS '是否禁用（0正常 1禁用）';
+COMMENT ON COLUMN sample_product.is_deleted IS '逻辑删除（0正常 1删除）';
 
 
 

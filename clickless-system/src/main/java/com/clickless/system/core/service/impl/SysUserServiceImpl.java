@@ -69,6 +69,18 @@ public class SysUserServiceImpl implements SysUserService
     }
 
     /**
+     * 根据条件分页查询用户列表
+     * 没有数据权限限制
+     *
+     * @param user 用户信息
+     * @return 用户信息集合信息
+     */
+    @Override
+    public List<SysUser> selectUserListWithoutDataScope(SysUser user) {
+        return userMapper.selectUserList(user);
+    }
+
+    /**
      * 根据条件分页查询已分配用户角色列表
      * 
      * @param user 用户信息

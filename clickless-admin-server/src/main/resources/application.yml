@@ -22,6 +22,13 @@ server:
   servlet:
     # 应用的访问路径
     context-path: /
+    session:
+      cookie:
+        # 认证后会响应 set-cookie: JSESSIONID=xxx;path=/ 请求头
+        # 即保存路径默认为 /，而前端cookie保存在根据路径 / ，
+        # 要保证前后端path一致，所以要指定 path=/ ,
+        # 前端才能找到响应的JSESSIONID，从而找到session
+        path: /
   tomcat:
     # tomcat的URI编码
     uri-encoding: UTF-8
@@ -35,6 +42,8 @@ logging:
   level:
     com.clickless: debug
     org.springframework: warn
+    org.activiti.engine.impl.persistence.entity: info
+    com.clickless.workflow.mapper: debug
 
 # Spring配置
 spring:

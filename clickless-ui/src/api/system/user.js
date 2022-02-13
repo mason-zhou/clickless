@@ -10,6 +10,15 @@ export function listUser(query) {
   })
 }
 
+// 查询所有用户(无数据权限限制)
+export function listAllUser(query) {
+  return request({
+    url: '/system/user/listAll',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询用户详细
 export function getUser(userId) {
   return request({

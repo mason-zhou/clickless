@@ -1,10 +1,12 @@
 package com.clickless.common.core.domain.model;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import com.clickless.common.core.domain.entity.SysUser;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -68,6 +70,11 @@ public class LoginUser implements UserDetails
     private Set<String> permissions;
 
     /**
+     * Spring框架权限列表
+     */
+    private Set<GrantedAuthority> authorities;
+
+    /**
      * 用户信息
      */
     private SysUser user;
@@ -110,6 +117,9 @@ public class LoginUser implements UserDetails
     {
         this.user = user;
         this.permissions = permissions;
+        this.authorities = new HashSet<>();
+        // 加入工作流用户角色
+        this.authorities.addAll(getWorkflowAuthorities());
     }
 
     public LoginUser(Long userId, Long deptId, SysUser user, Set<String> permissions)
@@ -118,6 +128,9 @@ public class LoginUser implements UserDetails
         this.deptId = deptId;
         this.user = user;
         this.permissions = permissions;
+        this.authorities = new HashSet<>();
+        // 加入工作流用户角色
+        this.authorities.addAll(getWorkflowAuthorities());
     }
 
     @JSONField(serialize = false)
@@ -259,9 +272,30 @@ public class LoginUser implements UserDetails
         this.user = user;
     }
 
+    public void setAuthorities(Set<GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        return null;
+        return this.authorities;
+    }
+
+    /**
+     * 获取工作流用户角色
+     *
+     * 系统集成activiti工作流框架
+     * 由于activiti用户权限方面与Spring Security安全框架深度绑定
+     * 用户需要拥有角色ACTIVITI_USER，才可以使用工作流引擎中 ProcessRuntime/TaskRuntime 两组接口
+     * 所以给用户默认加上以下两个角色权限
+     *
+     * @return
+     */
+    private Set<? extends GrantedAuthority> getWorkflowAuthorities(){
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_ACTIVITI_USER"));
+        authorities.add(new SimpleGrantedAuthority("GROUP_MANAGER_TEAM"));
+        return authorities;
     }
 }

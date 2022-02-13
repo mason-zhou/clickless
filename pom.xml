@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	
+    <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.clickless</groupId>
     <artifactId>clickless</artifactId>
     <version>3.7.0</version>
@@ -11,7 +11,7 @@
     <name>clickless</name>
     <url>http://www.clickless.com</url>
     <description>clickless脚手架</description>
-    
+
     <properties>
         <clickless.version>3.7.0</clickless.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,7 +36,7 @@
         <velocity.version>1.7</velocity.version>
         <jwt.version>0.9.1</jwt.version>
     </properties>
-	
+
     <!-- 依赖声明 -->
     <dependencyManagement>
         <dependencies>
@@ -235,6 +235,13 @@
                 <version>${clickless.version}</version>
             </dependency>
 
+            <!-- 工作流模块 -->
+            <dependency>
+                <groupId>com.clickless</groupId>
+                <artifactId>clickless-workflow</artifactId>
+                <version>${clickless.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -246,6 +253,7 @@
         <module>clickless-generator</module>
         <module>clickless-common</module>
         <module>clickless-sample</module>
+        <module>clickless-workflow</module>
     </modules>
     <packaging>pom</packaging>
 

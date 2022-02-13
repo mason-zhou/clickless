@@ -33,7 +33,7 @@ import com.clickless.system.core.service.SysUserService;
 
 /**
  * 用户信息
- * 
+ *
  * @author clickless
  */
 @RestController
@@ -59,6 +59,17 @@ public class SysUserController extends BaseController
         startPage();
         List<SysUser> list = userService.selectUserList(user);
         return getDataTable(list);
+    }
+
+    /**
+     * 获取全部用户列表
+     * 无数据权限限制
+     */
+    @GetMapping("/listAll")
+    public AjaxResult listAll(SysUser user)
+    {
+        List<SysUser> list = userService.selectUserListWithoutDataScope(user);
+        return AjaxResult.success(list);
     }
 
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)

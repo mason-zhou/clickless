@@ -64,7 +64,7 @@ spring:
         # 主库数据源
         master:
           driverClassName: org.postgresql.Driver
-          url: jdbc:postgresql://127.0.0.1:5432/github_clickless?reWriteBatchedInserts=true
+          url: jdbc:postgresql://127.0.0.1:5432/clickless_github?reWriteBatchedInserts=true
           username: 'postgres'
           password: 'postgres'
           p6spy: true # 如果这个库不需要可单独关闭。
@@ -77,3 +77,36 @@ spring:
           url:
           username:
           password:
+
+  # activiti配置
+  activiti:
+    #自动更新数据库结构
+    # true：适用开发环境，默认值。activiti会对数据库中所有表进行更新操作。如果表不存在，则自动创建
+    # false：适用生产环境。activiti在启动时，对比数据库表中保存的版本，如果没有表或者版本不匹配，将抛出异常
+    # create_drop： 在activiti启动时创建表，在关闭时删除表（必须手动关闭引擎，才能删除表）
+    # drop-create： 在activiti启动时删除原来的旧表，然后在创建新表（不需要手动关闭引擎）
+    database-schema-update: true
+    # activiti7与springboot整合后默认不创建历史表，需要手动开启
+    db-history-used: true
+      # 记录历史等级 可配置的历史级别有none, activity, audit, full
+    # none：不保存任何的历史数据，因此，在流程执行过程中，这是最高效的。
+    # activity：级别高于none，保存流程实例与流程行为，其他数据不保存。
+    # audit：除activity级别会保存的数据外，还会保存全部的流程任务及其属性。
+    # full：保存历史数据的最高级别，除了会保存audit级别的数据外，还会保存其他全部流程相关的细节数据，包括一些流程参数等。
+    history-level: full
+    # 是否自动检查resources下的processes目录的流程定义文件
+    check-process-definitions: false
+    # smtp服务器地址
+    mail-server-host: smtp.qq.com
+    # SSL端口号
+    mail-server-port: 465
+    # 开启ssl协议
+    mail-server-use-ssl: true
+    # 默认的邮件发送地址（发送人），如果activiti流程定义中没有指定发送人，则取这个值
+    mail-server-default-from: abcdefg@qq.com
+    # 邮件的用户名
+    mail-server-user-name: abcdefg@qq.com
+    # qq的smtp服务相关的授权码
+    mail-server-password: xxx填写自己qq邮箱的smtp授权码
+    # 关闭不自动添加部署数据 SpringAutoDeployment
+    deployment-mode: never-fail

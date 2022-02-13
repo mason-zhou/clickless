@@ -105,8 +105,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                         "/**/*.html",
                         "/**/*.css",
                         "/**/*.js",
-                        "/profile/**"
+                        "/profile/**",
+                        "/model/**/json", //工作流引擎编辑器接口
+                        "/editor/stencilset", //工作流引擎编辑器国际化接口
+                        "/model/export/zip/*", //工作流引擎模型导出
+                        "/process/export/**", //工作流引擎流程定义导出
+                        "/instance/history/image/**" //工作流引擎历史图片查询
                 ).permitAll()
+                .antMatchers(HttpMethod.PUT,
+                        "/model/**/save" //工作流引擎模型保存
+                )
+                .permitAll()
                 .antMatchers("/swagger-ui.html").anonymous()
                 .antMatchers("/swagger-resources/**").anonymous()
                 .antMatchers("/webjars/**").anonymous()

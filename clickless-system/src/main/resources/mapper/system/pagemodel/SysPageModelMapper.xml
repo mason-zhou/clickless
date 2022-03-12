@@ -112,6 +112,7 @@
         FROM sys_page_model a
                  LEFT JOIN sys_page_model_field b ON b.model_id = a.id
         WHERE a.model_key = #{modelKey}
+        ORDER BY b.model_id ASC, b.field_sort ASC
     </select>
 
     <insert id="insertSysPageModel" parameterType="SysPageModel" useGeneratedKeys="true" keyProperty="id">
